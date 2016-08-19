@@ -15,18 +15,11 @@ const App = React.createClass({
         store.dispatch({type: "ADD", item: text});
         document.getElementById('value').value = '';
     },
-    show: function () {
-        return store.getState().todos;
-    },
     deleteTodo: function (index) {
         store.dispatch({type: 'DELETE', item: index})
     },
     changeState: function (index) {
         store.dispatch({type: 'CHANGESTATE', item: index})
-    },
-    complete: function () {
-
-        store.dispatch({type: "COMPLETE", filter: 'complete'})
     },
     filter(filterName) {
         store.dispatch({type: 'FILTER', filterName});
@@ -45,7 +38,6 @@ const App = React.createClass({
             <h1>todo</h1>
             <input type="text" id="value" ref="item"/>
             <button onClick={this.add}>add</button>
-
             <TodoList todos={this.filterTodos()} deleteTodo={this.deleteTodo}
                       changeState={this.changeState}/>
             <TodoFooter onFilter={this.filter}/>
@@ -63,7 +55,7 @@ const TodoList = React.createClass({
         const todos = this.props.todos.map((ele, index) => {
             return <div key={index}>
                 <input type="checkbox" checked={ele.isComplete} name="ele" onClick={this.changeState.bind(this, index)}/>
-                {ele.item}
+                <span style={{"textDecoration": ele.isComplete ? "line-through" : ""}}>{ele.item}</span>
                 <button onClick={this.deleteTodo.bind(this, index)}>X</button>
             </div>
         });
@@ -80,12 +72,8 @@ const TodoFooter = React.createClass({
     },
     render: function () {
         return <div>
-            {/*<button>all</button>*/}
-            {/*<button>complete</button>*/}
-            {/*<button>active</button>*/}
-            {/*<button>clear all</button>*/}
-            <span onClick={this.filter.bind(this, 'ALL')}>ALL</span>{' '}
-            <span onClick={this.filter.bind(this, 'ACTIVE')}>ACTIVE</span>{' '}
+            <span onClick={this.filter.bind(this, 'ALL')}>ALL</span>&nbsp;
+            <span onClick={this.filter.bind(this, 'ACTIVE')}>ACTIVE</span>&nbsp;
             <span onClick={this.filter.bind(this, 'COMPLETED')}>COMPLETED</span>
         </div>;
     }

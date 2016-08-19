@@ -10,11 +10,6 @@ function reducer(state={todos:[], filterName: 'ALL'},action) {
         case 'CHANGESTATE':
             state.todos[action.item].isComplete =  !state.todos[action.item].isComplete;
             return state;
-        case 'COMPLETE':
-            console.log('dfghjk');
-            const completed = state.todos.filter((todo) =>todo.isComplete);
-            console.log(completed);
-            return completed;
         case 'FILTER' :
             state.filterName = action.filterName;
             console.log(state.filterName);
